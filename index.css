@@ -5,6 +5,18 @@
 }
 
 body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     min-height: 100vh;
     margin: 0;
+    font-family: "Roboto", sans-serif;
+    font-weight: 900;
+    color: #333;
+    background-color: #fdca25;
+}
+
+input {
+    font: inherit;
+    color: inherit;
 }

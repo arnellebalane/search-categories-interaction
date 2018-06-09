@@ -1,11 +1,17 @@
 <template>
     <div id="app" class="app">
-        <h1>Hello World</h1>
+        <SearchInput />
     </div>
 </template>
 
 <script>
+    import SearchInput from './components/SearchInput.vue';
+
     export default {
-        name: 'App'
+        name: 'App',
+
+        components: {
+            SearchInput
+        }
     };
 </script>
