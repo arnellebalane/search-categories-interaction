@@ -20,7 +20,6 @@
 <style scoped>
     .search-input {
         position: relative;
-        overflow: hidden;
     }
 
     input {
@@ -30,7 +29,7 @@
         padding-left: 84px;
         border: none;
         border-radius: 10px;
-        font-size: 24px;
+        font-size: 28px;
         line-height: 80px;
         letter-spacing: 1px;
         outline: none;

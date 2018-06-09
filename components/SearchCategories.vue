@@ -1,18 +1,70 @@
 <template>
     <div class="search-categories">
-        <button></button>
-        <div class="categories">
-            <p>All</p>
-            <p>Videos</p>
-            <p>Images</p>
-            <p>News</p>
+        <button ref="button" @click="rotate"></button>
+        <div class="overflow">
+            <div ref="categories" class="categories">
+                <p ref="all">All</p>
+                <p ref="videos">Videos</p>
+                <p ref="images">Images</p>
+                <p ref="news">News</p>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
+    import anime from 'animejs';
+
     export default {
-        name: 'SearchCategories'
+        name: 'SearchCategories',
+
+        data() {
+            return {
+                rotation: 0
+            };
+        },
+
+        methods: {
+            rotate() {
+                this.rotation += 90;
+
+                anime({
+                    targets: [this.$refs.button, this.$refs.categories],
+                    rotate: this.rotation,
+                    easing: 'easeInOutBack',
+                    duration: 700
+                });
+
+                var current, next;
+
+                if (this.rotation % 360 === 0) {
+                    current = this.$refs.news;
+                    next = this.$refs.all;
+                } else if (this.rotation % 360 === 90) {
+                    current = this.$refs.all;
+                    next = this.$refs.videos;
+                } else if (this.rotation % 360 === 180) {
+                    current = this.$refs.videos;
+                    next = this.$refs.images;
+                } else if (this.rotation % 360 === 270) {
+                    current = this.$refs.images;
+                    next = this.$refs.news;
+                }
+
+                anime({
+                    targets: current,
+                    opacity: 0,
+                    duration: 350,
+                    easing: 'easeInQuad'
+                });
+                anime({
+                    targets: next,
+                    opacity: 1,
+                    duration: 350,
+                    easing: 'easeInQuad'
+                });
+            }
+        }
     };
 </script>
 
@@ -39,7 +91,7 @@
         content: "";
         width: 14px;
         height: 5px;
-        border-radius: 8px;
+        border-radius: 10px;
         position: absolute;
         top: calc(50% - 3px);
         left: calc(50% - 7px);
@@ -48,21 +100,36 @@
         transform-origin: center center;
     }
 
-    .categories {
-        display: var(--placeholder-display, block);
-    }
-
+    .overflow,
+    .categories,
     .categories p {
-        padding-left: 84px;
-        margin: 0;
         position: absolute;
         top: 0;
         left: 0;
         right: 0;
         bottom: 0;
-        font-size: 24px;
-        line-height: 80px;
+    }
+
+    .overflow {
+        overflow: hidden;
+    }
+
+    .categories {
+        display: var(--placeholder-display, block);
         transform-origin: 40px 40px;
+    }
+
+    .categories p {
+        padding-left: 84px;
+        margin: 0;
+        font-size: 28px;
+        line-height: 80px;
+        letter-spacing: 1px;
+        transform-origin: 40px 40px;
+    }
+
+    .categories p:not(:nth-child(1)) {
+        opacity: 0;
     }
 
     .categories p:nth-child(2) {
