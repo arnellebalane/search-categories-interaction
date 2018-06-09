@@ -1,6 +1,8 @@
 <template>
     <div class="search-categories">
         <button ref="button" @click="rotate"></button>
+        <div ref="ripple" class="ripple"></div>
+
         <div class="overflow">
             <div ref="categories" class="categories">
                 <p ref="all">All</p>
@@ -32,7 +34,8 @@
                     targets: [this.$refs.button, this.$refs.categories],
                     rotate: this.rotation,
                     easing: 'easeInOutBack',
-                    duration: 700
+                    duration: 700,
+                    delay: 50
                 });
 
                 var current, next;
@@ -55,13 +58,23 @@
                     targets: current,
                     opacity: 0,
                     duration: 350,
+                    delay: 50,
                     easing: 'easeInQuad'
                 });
                 anime({
                     targets: next,
                     opacity: 1,
                     duration: 350,
+                    delay: 50,
                     easing: 'easeInQuad'
+                });
+                anime({
+                    targets: this.$refs.ripple,
+                    scale: [1.3, 3.5],
+                    opacity: [0.5, 0],
+                    borderWidth: ['18px', '2px'],
+                    duration: 750,
+                    easing: 'easeInOutBack'
                 });
             }
         }
@@ -73,6 +86,19 @@
         padding: 24px;
         color: #ddd9cb;
         pointer-events: none;
+    }
+
+    .ripple {
+        width: 40px;
+        height: 40px;
+        border: 20px solid currentColor;
+        border-radius: 50%;
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        z-index: 1;
+        opacity: 0;
+        transform-origin: center center;
     }
 
     button {
